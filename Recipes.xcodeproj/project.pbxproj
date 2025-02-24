@@ -117,6 +117,7 @@
 			children = (
 				2FA013C62D6A5FAC0055741C /* Recipes */,
 				2FA013D72D6A5FAF0055741C /* RecipesTests */,
+				2FA013F12D6A60D30055741C /* README.md */,
 				2FA013C52D6A5FAC0055741C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -140,7 +141,6 @@
 				2FA0140C2D6A6EB90055741C /* CommonUI */,
 				2FA014342D6C1D710055741C /* Screens */,
 				2FA013CB2D6A5FAF0055741C /* Assets.xcassets */,
-				2FA013F12D6A60D30055741C /* README.md */,
 			);
 			path = Recipes;
 			sourceTree = "<group>";
