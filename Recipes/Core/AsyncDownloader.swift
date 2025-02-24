@@ -7,15 +7,17 @@
 
 import Foundation
 
-actor AsyncDownloader<ValueType> {
+public actor AsyncDownloader<ValueType> {
     private enum CacheEntry {
         case inProgress(Task<ValueType, Error>)
         case ready(ValueType)
     }
 
     private var cache: [String: CacheEntry] = [:]
+    
+    public init() { }
 
-    func value(for key: String, asyncTask: Task<ValueType, Error>) async throws -> ValueType {
+    public func value(for key: String, asyncTask: Task<ValueType, Error>) async throws -> ValueType {
         if let cached = cache[key] {
             switch cached {
             case .ready(let value):
