@@ -41,7 +41,7 @@ public actor AsyncDownloader<ValueType> {
         }
     }
     
-    func clearCache() {
+    public func clearCache() {
         cache.removeAll()
     }
 }

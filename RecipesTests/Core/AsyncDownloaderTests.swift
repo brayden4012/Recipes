@@ -15,25 +15,32 @@ final class AsyncDownloaderTests: XCTestCase {
         asyncDownloader = .init()
     }
 
-    func test_intialDownload_shouldNotBeCached() async throws {
-        let value = try await asyncDownloader.value(for: "1", asyncTask: Task.detached(operation: {
-            await self.fetchValue(1)
-        }))
+    func test_intialValue_shouldNotBeCached() async throws {
+        let value = try await getValue(1)
         XCTAssertEqual(value, 1)
     }
     
-    func test_secondDownload_shouldBeCached() async throws {
-        _ = try await asyncDownloader.value(for: "1", asyncTask: Task.detached(operation: {
-            await self.fetchValue(1)
-        }))
-        let value2 = try await asyncDownloader.value(for: "1", asyncTask: Task.detached(operation: {
-            await self.fetchValue(2)
-        }))
-        XCTAssertEqual(value2, 1)
+    func test_secondValue_shouldBeCached() async throws {
+        try await getValue(1)
+        let value = try await getValue(2)
+        XCTAssertEqual(value, 1)
+    }
+    
+    func test_secondValue_afterClearingCache_shouldNotBeCached() async throws {
+        try await getValue(1)
+        await asyncDownloader.clearCache()
+        let value = try await getValue(2)
+        XCTAssertEqual(value, 2)
     }
 
-    private func fetchValue(_ returnValue: Int) async -> Int {
-        return returnValue
+    @discardableResult
+    private func getValue(_ asyncValue: Int) async throws -> Int {
+        try await asyncDownloader.value(
+            for: "1",
+            asyncTask: Task.detached {
+                return asyncValue
+            }
+        )
     }
 
 }
